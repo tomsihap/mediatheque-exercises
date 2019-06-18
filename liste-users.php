@@ -6,12 +6,13 @@
 // Récupérer les données avec PDO
 $request = 'SELECT  user.id as userId,
                     user.name as userName,
+                    user.media_id as userMediaId,
                     media.id as mediaId,
                     media.title as mediaTitle,
                     media.creator as mediaCreator,
                     media.type_id as mediaTypeId
             FROM user
-            INNER JOIN media
+            LEFT JOIN media
                 ON user.media_id = media.id';
 $response = $bdd->query($request);
 $users = $response->fetchAll(PDO::FETCH_ASSOC);
@@ -33,11 +34,14 @@ $users = $response->fetchAll(PDO::FETCH_ASSOC);
             <th>Média emprunté</th>
         </tr>
     </thead>
-<?php foreach($users as $user) : ?>
+<?php foreach($users as $user) :
+
+    // Soit on affiche : "Média (créateur)", soit on n'affiche rien si pas de média emprunté.
+    $mediaEmprunte = ($user['userMediaId']) ? $user['mediaTitle'] . ' (' . $user['mediaCreator'] . ')' : '' ?>
     <tr>
         <td><?= $user['userId'] ?></td>
         <td><?= $user['userName'] ?></td>
-        <td><?= $user['mediaTitle'] ?> (<?= $user['mediaCreator'] ?>)</td>
+        <td><?= $mediaEmprunte ?></td>
     </tr>
 <?php endforeach; ?>
 </table>
