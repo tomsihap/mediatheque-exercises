@@ -27,7 +27,14 @@ if (!empty($_POST)) {
 
 // Récupération de la liste des types de médias pour le select>option
 
-$request = "SELECT * FROM media";
+$request = "SELECT  media.id as mediaId,
+                    media.creator as mediaCreator,
+                    media.Title as mediaTitle,
+                    type.id as typeId,
+                    type.name as typeName
+            FROM media
+            LEFT JOIN type
+                ON media.type_id = type.id";
 $response = $bdd->query($request);
 $medias = $response->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -50,8 +57,8 @@ $medias = $response->fetchAll(PDO::FETCH_ASSOC);
                 <label for="formMediaId">Média emprunté</label>
                 <select class="form-control" name="media_id">
                     <?php foreach ($medias as $media) : ?>
-                        <option value="<?= $media['id'] ?>">
-                            <?= $media['title'] ?> (<?= $media['creator'] ?>)
+                        <option value="<?= $media['mediaId'] ?>">
+                            <?= $media['mediaTitle'] ?> (<?= $media['mediaCreator'] ?>) - Type : <?= $media['typeName'] ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
