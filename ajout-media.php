@@ -26,6 +26,12 @@ if (!empty($_POST)) {
     }
 
 }
+
+// Récupération de la liste des types de médias pour le select>option
+
+$request = "SELECT * FROM type";
+$response = $bdd->query($request);
+$types = $response->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- // Inclusion du header -->
@@ -49,7 +55,11 @@ if (!empty($_POST)) {
 
     <div class="form-group">
         <label for="formTypeId"># du type de média</label>
-        <input name="type_id" class="form-control" type="number">
+        <select class="form-control" name="type_id">
+            <?php foreach ($types as $type) : ?>
+                <option value="<?= $type['id'] ?>"><?= $type['name'] ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <button class="btn btn-primary float-right" type="submit">Créer</button>
