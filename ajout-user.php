@@ -34,7 +34,10 @@ $request = "SELECT  media.id as mediaId,
                     type.name as typeName
             FROM media
             LEFT JOIN type
-                ON media.type_id = type.id";
+                ON media.type_id = type.id
+            LEFT JOIN user
+                on media.id = user.media_id
+            WHERE user.media_id is null";
 $response = $bdd->query($request);
 $medias = $response->fetchAll(PDO::FETCH_ASSOC);
 ?>
