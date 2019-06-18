@@ -4,7 +4,14 @@
 
 <?php
 // Récupérer les données avec PDO
-$request = 'SELECT * FROM media';
+$request = 'SELECT  media.id as mediaId,
+                    media.title as mediaTitle,
+                    media.creator as mediaCreator,
+                    type.id as typeId,
+                    type.name as typeName
+            FROM media
+            LEFT JOIN type
+                ON media.type_id = media.id';
 $response = $bdd->query($request);
 $medias = $response->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -23,15 +30,15 @@ $medias = $response->fetchAll(PDO::FETCH_ASSOC);
             <th>#</th>
             <th>Créateur</th>
             <th>Titre</th>
-            <th># du type de média</th>
+            <th>Type de média</th>
         </tr>
     </thead>
 <?php foreach($medias as $media) : ?>
     <tr>
-        <td><?= $media['id'] ?></td>
-        <td><?= $media['creator'] ?></td>
-        <td><?= $media['title'] ?></td>
-        <td><?= $media['type_id'] ?></td>
+        <td><?= $media['mediaId'] ?></td>
+        <td><?= $media['mediaCreator'] ?></td>
+        <td><?= $media['mediaTitle'] ?></td>
+        <td><?= $media['typeName'] ?></td>
     </tr>
 <?php endforeach; ?>
 </table>
