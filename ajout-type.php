@@ -6,6 +6,14 @@
 if (!empty($_POST)) {
 
     // Gérer les données du formulaire
+    $query = "  INSERT INTO type (name)
+                VALUES (:name)";
+
+    $request = $bdd->prepare($query);
+
+    $request->execute([
+        'name'   => $_POST['name'],
+    ]);
 
 }
 ?>
@@ -17,7 +25,16 @@ if (!empty($_POST)) {
 <h1>Ajout d'un type de média</h1>
 
 <!-- FORMULAIRE D'AJOUT -->
+<form action="ajout-type.php" method="post">
 
+    <div class="form-group">
+        <label for="formName">Nom du nouveau type</label>
+        <input name="name" class="form-control" type="text">
+    </div>
+
+    <button class="btn btn-primary float-right" type="submit">Créer</button>
+
+</form>
 <!-- / FORMULAIRE D'AJOUT -->
 
 <!-- // Inclusion du footer -->
