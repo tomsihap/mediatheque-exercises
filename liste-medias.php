@@ -12,7 +12,7 @@ $medias = $response->fetchAll(PDO::FETCH_ASSOC);
 <!-- // Inclusion du header -->
 <?php include ('partials/_header.php'); ?>
 <a href="index.php" class="btn btn-sm btn-secondary">< retour à l'index</a>
-<a href="ajout-type.php" class="btn btn-sm btn-primary float-right">Nouveau média</a>
+<a href="ajout-media.php" class="btn btn-sm btn-primary float-right">Nouveau média</a>
 
 <h1>Liste des médias</h1>
 
