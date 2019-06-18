@@ -8,10 +8,16 @@ $request = 'SELECT  media.id as mediaId,
                     media.title as mediaTitle,
                     media.creator as mediaCreator,
                     type.id as typeId,
-                    type.name as typeName
+                    type.name as typeName,
+                    user.media_id as userMediaId,
+                    user.name as userName,
+                    user.id as userId
             FROM media
             LEFT JOIN type
-                ON media.type_id = type.id';
+                ON media.type_id = type.id
+            LEFT JOIN user
+                ON user.media_id = media.id
+            ORDER BY media.title ASC';
 $response = $bdd->query($request);
 $medias = $response->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -31,14 +37,26 @@ $medias = $response->fetchAll(PDO::FETCH_ASSOC);
             <th>Créateur</th>
             <th>Titre</th>
             <th>Type de média</th>
+            <th>Loué ?</th>
         </tr>
     </thead>
-<?php foreach($medias as $media) : ?>
+<?php foreach($medias as $media) : 
+    
+    // Par défaut, pas d'emprunteur
+    $hasEmprunteur = '<span class="badge badge-danger">Non</span>';
+    
+    // Si il y a un emprunteur :
+    if ($media['userMediaId']) {
+    $hasEmprunteur = '<a href="page-user.php?id='.$media['userName'].'"><span class="badge badge-success">'.$media['userName'].' (Voir le profil)</span></a>';
+
+    }
+    ?>
     <tr>
         <td><?= $media['mediaId'] ?></td>
         <td><?= $media['mediaCreator'] ?></td>
         <td><a href="page-media.php?id=<?= $media['mediaId'] ?>"><?= $media['mediaTitle'] ?></a></td>
         <td><?= $media['typeName'] ?></td>
+        <td><?= $hasEmprunteur ?></td>
     </tr>
 <?php endforeach; ?>
 </table>
