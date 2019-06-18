@@ -10,10 +10,14 @@ $request = 'SELECT  user.id as userId,
                     media.id as mediaId,
                     media.title as mediaTitle,
                     media.creator as mediaCreator,
-                    media.type_id as mediaTypeId
+                    media.type_id as mediaTypeId,
+                    type.id as typeId,
+                    type.name as typeName
             FROM user
             LEFT JOIN media
-                ON user.media_id = media.id';
+                ON user.media_id = media.id
+            LEFT JOIN type
+                ON media.type_id = type.id';
 $response = $bdd->query($request);
 $users = $response->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -36,8 +40,23 @@ $users = $response->fetchAll(PDO::FETCH_ASSOC);
     </thead>
 <?php foreach($users as $user) :
 
-    // Soit on affiche : "Média (créateur)", soit on n'affiche rien si pas de média emprunté.
-    $mediaEmprunte = ($user['userMediaId']) ? $user['mediaTitle'] . ' (' . $user['mediaCreator'] . ')' : '' ?>
+    // Si on a un média, on affiche "Média (créateur)" sinon rien :
+    $mediaEmprunte = '';
+
+    if ($user['userMediaId']) {
+
+        $mediaEmprunte = $user['mediaTitle'] . ' (' . $user['mediaCreator'] . ')';
+
+        // Si le média a un type, on l'affiche : "Média (créateur) - Type : DVD"
+
+        if ($user['mediaTypeId']) {
+
+            $mediaEmprunte .= " - Type : " . $user['typeName'];
+        }
+
+    }
+
+?>
     <tr>
         <td><?= $user['userId'] ?></td>
         <td><?= $user['userName'] ?></td>
