@@ -24,6 +24,12 @@ if (!empty($_POST)) {
         throw new Exception('Il y a eu un problème lors de l\'enregistrement des données.');
     }
 }
+
+// Récupération de la liste des types de médias pour le select>option
+
+$request = "SELECT * FROM media";
+$response = $bdd->query($request);
+$medias = $response->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- // Inclusion du header -->
@@ -41,8 +47,14 @@ if (!empty($_POST)) {
             </div>
 
             <div class="form-group">
-                <label for="formMediaId"># du média emprunté</label>
-                <input name="media_id" class="form-control" type="text">
+                <label for="formMediaId">Média emprunté</label>
+                <select class="form-control" name="media_id">
+                    <?php foreach ($medias as $media) : ?>
+                        <option value="<?= $media['id'] ?>">
+                            <?= $media['title'] ?> (<?= $media['creator'] ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
             <button class="btn btn-primary float-right" type="submit">Créer</button>

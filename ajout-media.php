@@ -54,7 +54,7 @@ $types = $response->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="form-group">
-        <label for="formTypeId"># du type de média</label>
+        <label for="formTypeId">Type de média</label>
         <select class="form-control" name="type_id">
             <?php foreach ($types as $type) : ?>
                 <option value="<?= $type['id'] ?>"><?= $type['name'] ?></option>
