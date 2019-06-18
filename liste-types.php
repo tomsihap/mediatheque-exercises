@@ -29,7 +29,7 @@ $types = $response->fetchAll(PDO::FETCH_ASSOC);
 <?php foreach($types as $type) : ?>
     <tr>
         <td><?= $type['id'] ?></td>
-        <td><?= $type['name'] ?></td>
+        <td><a href="page-type.php?id=<?= $type['id'] ?>"><?= $type['name'] ?></a></td>
     </tr>
 <?php endforeach; ?>
 </table>
