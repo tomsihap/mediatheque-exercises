@@ -10,10 +10,17 @@ if (!empty($_POST)) {
 
     $request = $bdd->prepare($query);
 
-    $request->execute([
+    $response = $request->execute([
         'name'      => $_POST['name'],
         'media_id'  => $_POST['media_id']
     ]);
+
+    if ($response) {
+        Header('Location: liste-users.php');
+    }
+    else {
+        throw new Exception('Il y a eu un problème lors de l\'enregistrement des données.');
+    }
 }
 ?>
 
@@ -33,7 +40,7 @@ if (!empty($_POST)) {
 
             <div class="form-group">
                 <label for="formMediaId"># du média emprunté</label>
-                <input name="media_id" class="form-control" type="number">
+                <input name="media_id" class="form-control" type="text">
             </div>
 
             <button class="btn btn-primary float-right" type="submit">Créer</button>

@@ -11,9 +11,16 @@ if (!empty($_POST)) {
 
     $request = $bdd->prepare($query);
 
-    $request->execute([
+    $response = $request->execute([
         'name'   => $_POST['name'],
     ]);
+
+    if ($response) {
+        Header('Location: liste-types.php');
+    }
+    else {
+        throw new Exception('Il y a eu un problème lors de l\'enregistrement des données.');
+    }
 
 }
 ?>

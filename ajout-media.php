@@ -10,11 +10,18 @@ if (!empty($_POST)) {
 
     $request = $bdd->prepare($query);
 
-    $request->execute([
+    $response = $request->execute([
         'creator'   => $_POST['creator'],
         'title'     => $_POST['title'],
         'type_id'   => $_POST['type_id'],
     ]);
+
+    if ($response) {
+        Header('Location: liste-medias.php');
+    }
+    else {
+        throw new Exception('Il y a eu un problème lors de l\'enregistrement des données.');
+    }
 
 }
 ?>
