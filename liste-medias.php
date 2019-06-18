@@ -47,8 +47,7 @@ $medias = $response->fetchAll(PDO::FETCH_ASSOC);
     
     // Si il y a un emprunteur :
     if ($media['userMediaId']) {
-    $hasEmprunteur = '<a href="page-user.php?id='.$media['userName'].'"><span class="badge badge-success">'.$media['userName'].' (Voir le profil)</span></a>';
-
+        $hasEmprunteur = '<a href="page-user.php?id='.$media['userName'].'"><span class="badge badge-success">'.$media['userName'].' (Voir le profil)</span></a>';
     }
     ?>
     <tr>

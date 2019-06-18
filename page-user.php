@@ -11,27 +11,38 @@ $request = 'SELECT  media.id as mediaId,
                     type.name as typeName,
                     user.id as userId,
                     user.name as userName
-            FROM media
+            FROM user
+            LEFT JOIN media
+                ON media.id = user.media_id
             LEFT JOIN type
                 ON media.type_id = type.id
-            LEFT JOIN user
-                ON user.media_id = media.id
-            WHERE media.id = ' . $_GET['id'];
+            WHERE user.id = ' . $_GET['id'];
+
+
+
 
 $response = $bdd->query($request);
-$media = $response->fetch(PDO::FETCH_ASSOC);
+$user = $response->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
 <!-- // Inclusion du header -->
 <?php include ('partials/_header.php'); ?>
-<a href="liste-medias.php" class="btn btn-sm btn-secondary">< retour à la liste des médias</a>
-<h1>Page média</h1>
+<a href="liste-users.php" class="btn btn-sm btn-secondary">< retour à la liste des utilisateurs</a>
+<h1>Page profil utilisateur</h1>
 
 <div class="card">
-    <div class="card-header"><?= $media['mediaTitle']?> (<?= $media['mediaCreator']?>) - Type : <a href="page-type.php?id=<?= $media['typeId']?>"><?= $media['typeName']?></a></div>
+    <div class="card-header"><?= $user['userName']?></div>
     <div class="card-body">
-        <h2>Utilisateur louant ce film : <a href="page-user.php?id=<?= $media['userId'] ?>"><?= $media['userName']?></a></h2>
+        <h2>Film loué par cet utilisateur : 
+            <a href="page-media.php?id=<?= $user['mediaId']?>">
+                <?= $user['mediaTitle']?> (<?= $user['mediaCreator']?>)
+            </a>
+            - Type :
+            <a href="page-type.php?id=<?= $user['typeId']?>">
+                <?= $user['typeName']?>
+            </a>
+        </h2>
     </div>
 </div>
 
