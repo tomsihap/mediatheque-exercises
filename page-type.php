@@ -25,7 +25,6 @@ $medias = $response->fetchAll(PDO::FETCH_ASSOC);
 <!-- // Inclusion du header -->
 <?php include ('partials/_header.php'); ?>
 <a href="liste-types.php" class="btn btn-sm btn-secondary">< retour à la liste des types</a>
-<a href="ajout-type.php" class="btn btn-sm btn-primary float-right">Nouveau type</a>
 <h1>Page type</h1>
 
 <div class="card">

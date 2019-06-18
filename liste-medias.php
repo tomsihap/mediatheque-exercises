@@ -37,7 +37,7 @@ $medias = $response->fetchAll(PDO::FETCH_ASSOC);
     <tr>
         <td><?= $media['mediaId'] ?></td>
         <td><?= $media['mediaCreator'] ?></td>
-        <td><?= $media['mediaTitle'] ?></td>
+        <td><a href="page-media.php?id=<?= $media['mediaId'] ?>"><?= $media['mediaTitle'] ?></a></td>
         <td><?= $media['typeName'] ?></td>
     </tr>
 <?php endforeach; ?>
