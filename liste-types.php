@@ -1,3 +1,4 @@
+<?php session_start(); // Obligatoire pour utiliser les sessions ?>
 <?php require_once 'pdo.php' ?>
 
 

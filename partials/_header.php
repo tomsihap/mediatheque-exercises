@@ -16,3 +16,23 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col-12">
+
+            <?php 
+            
+                // Si on a des données dans le tableau "info" de session...
+                if (!empty($_SESSION['info']) ) :
+
+                    // ... on les affiche : 
+                    foreach($_SESSION['info'] as $info) :
+            ?>
+
+                    <div class="alert alert-success" role="alert">
+                        <?= $info ?>
+                    </div>
+            <?php
+                    endforeach;
+
+                    // ... puis on détruit le tableau "info"
+                    unset($_SESSION['info']);
+                endif;
+            ?>

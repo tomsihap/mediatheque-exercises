@@ -1,3 +1,4 @@
+<?php session_start(); // Obligatoire pour utiliser les sessions ?>
 <?php require_once 'pdo.php' ?>
 
 
@@ -16,7 +17,8 @@ if (!empty($_POST)) {
     ]);
 
     if ($response) {
-        Header('Location: liste-types.php');
+        $_SESSION['info'][] = "Le type a bien été ajouté.";
+        Header('Location: liste-types.php'); exit();
     }
     else {
         throw new Exception('Il y a eu un problème lors de l\'enregistrement des données.');

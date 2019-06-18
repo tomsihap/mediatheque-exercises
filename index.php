@@ -1,3 +1,4 @@
+<?php session_start(); // Obligatoire pour utiliser les sessions ?>
 <?php include('partials/_header.php'); ?>
 
 <h1>Accueil de la médiathèque</h1>
